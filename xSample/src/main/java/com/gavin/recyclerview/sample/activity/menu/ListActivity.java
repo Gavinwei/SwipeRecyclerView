@@ -84,19 +84,19 @@ public class ListActivity extends BaseActivity {
             int height = ViewGroup.LayoutParams.MATCH_PARENT;
 
             // 添加左侧的，如果不添加，则左侧不会出现菜单。
-            {
-                SwipeMenuItem addItem = new SwipeMenuItem(ListActivity.this).setBackground(R.drawable.selector_green)
-                        .setImage(R.drawable.ic_action_add)
-                        .setWidth(width)
-                        .setHeight(height);
-                swipeLeftMenu.addMenuItem(addItem); // 添加菜单到左侧。
-
-                SwipeMenuItem closeItem = new SwipeMenuItem(ListActivity.this).setBackground(R.drawable.selector_red)
-                        .setImage(R.drawable.ic_action_close)
-                        .setWidth(width)
-                        .setHeight(height);
-                swipeLeftMenu.addMenuItem(closeItem); // 添加菜单到左侧。
-            }
+//            {
+//                SwipeMenuItem addItem = new SwipeMenuItem(ListActivity.this).setBackground(R.drawable.selector_green)
+//                        .setImage(R.drawable.ic_action_add)
+//                        .setWidth(width)
+//                        .setHeight(height);
+//                swipeLeftMenu.addMenuItem(addItem); // 添加菜单到左侧。
+//
+//                SwipeMenuItem closeItem = new SwipeMenuItem(ListActivity.this).setBackground(R.drawable.selector_red)
+//                        .setImage(R.drawable.ic_action_close)
+//                        .setWidth(width)
+//                        .setHeight(height);
+//                swipeLeftMenu.addMenuItem(closeItem); // 添加菜单到左侧。
+//            }
 
             // 添加右侧的，如果不添加，则右侧不会出现菜单。
             {
