@@ -61,6 +61,7 @@ public class SwipeMenuLayout extends FrameLayout implements Controller {
     private VelocityTracker mVelocityTracker;
     private int mScaledMinimumFlingVelocity;
     private int mScaledMaximumFlingVelocity;
+    private boolean isMenuRightOpen = false;
 
 
     public SwipeMenuLayout(Context context) {
@@ -168,18 +169,18 @@ public class SwipeMenuLayout extends FrameLayout implements Controller {
         int action = ev.getAction();
         switch (action) {
             case MotionEvent.ACTION_DOWN: {
-                mDownX = mLastX = (int)ev.getX();
-                mDownY = (int)ev.getY();
+                mDownX = mLastX = (int) ev.getX();
+                mDownY = (int) ev.getY();
                 return false;
             }
             case MotionEvent.ACTION_MOVE: {
-                int disX = (int)(ev.getX() - mDownX);
-                int disY = (int)(ev.getY() - mDownY);
+                int disX = (int) (ev.getX() - mDownX);
+                int disY = (int) (ev.getY() - mDownY);
                 return Math.abs(disX) > mScaledTouchSlop && Math.abs(disX) > Math.abs(disY);
             }
             case MotionEvent.ACTION_UP: {
                 boolean isClick = mSwipeCurrentHorizontal != null &&
-                    mSwipeCurrentHorizontal.isClickOnContentView(getWidth(), ev.getX());
+                        mSwipeCurrentHorizontal.isClickOnContentView(getWidth(), ev.getX());
                 if (isMenuOpen() && isClick) {
                     smoothCloseMenu();
                     return true;
@@ -207,13 +208,13 @@ public class SwipeMenuLayout extends FrameLayout implements Controller {
         int action = ev.getAction();
         switch (action) {
             case MotionEvent.ACTION_DOWN: {
-                mLastX = (int)ev.getX();
-                mLastY = (int)ev.getY();
+                mLastX = (int) ev.getX();
+                mLastY = (int) ev.getY();
                 break;
             }
             case MotionEvent.ACTION_MOVE: {
-                int disX = (int)(mLastX - ev.getX());
-                int disY = (int)(mLastY - ev.getY());
+                int disX = (int) (mLastX - ev.getX());
+                int disY = (int) (mLastY - ev.getY());
                 if (!mDragging && Math.abs(disX) > mScaledTouchSlop && Math.abs(disX) > Math.abs(disY)) {
                     mDragging = true;
                 }
@@ -234,18 +235,18 @@ public class SwipeMenuLayout extends FrameLayout implements Controller {
                         }
                     }
                     scrollBy(disX, 0);
-                    mLastX = (int)ev.getX();
-                    mLastY = (int)ev.getY();
+                    mLastX = (int) ev.getX();
+                    mLastY = (int) ev.getY();
                     shouldResetSwipe = false;
                 }
                 break;
             }
             case MotionEvent.ACTION_UP: {
-                dx = (int)(mDownX - ev.getX());
-                dy = (int)(mDownY - ev.getY());
+                dx = (int) (mDownX - ev.getX());
+                dy = (int) (mDownY - ev.getY());
                 mDragging = false;
                 mVelocityTracker.computeCurrentVelocity(1000, mScaledMaximumFlingVelocity);
-                int velocityX = (int)mVelocityTracker.getXVelocity();
+                int velocityX = (int) mVelocityTracker.getXVelocity();
                 int velocity = Math.abs(velocityX);
                 if (velocity > mScaledMinimumFlingVelocity) {
                     if (mSwipeCurrentHorizontal != null) {
@@ -272,7 +273,7 @@ public class SwipeMenuLayout extends FrameLayout implements Controller {
                 mVelocityTracker.recycle();
                 mVelocityTracker = null;
                 if (Math.abs(mDownX - ev.getX()) > mScaledTouchSlop ||
-                    Math.abs(mDownY - ev.getY()) > mScaledTouchSlop || isLeftMenuOpen() || isRightMenuOpen()) {
+                        Math.abs(mDownY - ev.getY()) > mScaledTouchSlop || isLeftMenuOpen() || isRightMenuOpen()) {
                     ev.setAction(MotionEvent.ACTION_CANCEL);
                     super.onTouchEvent(ev);
                     return true;
@@ -284,8 +285,8 @@ public class SwipeMenuLayout extends FrameLayout implements Controller {
                 if (!mScroller.isFinished()) {
                     mScroller.abortAnimation();
                 } else {
-                    dx = (int)(mDownX - ev.getX());
-                    dy = (int)(mDownY - ev.getY());
+                    dx = (int) (mDownX - ev.getX());
+                    dy = (int) (mDownY - ev.getY());
                     judgeOpenClose(dx, dy);
                 }
                 break;
@@ -297,14 +298,13 @@ public class SwipeMenuLayout extends FrameLayout implements Controller {
     /**
      * compute finish duration.
      *
-     * @param ev up event.
+     * @param ev       up event.
      * @param velocity velocity x.
-     *
      * @return finish duration.
      */
     private int getSwipeDuration(MotionEvent ev, int velocity) {
         int sx = getScrollX();
-        int dx = (int)(ev.getX() - sx);
+        int dx = (int) (ev.getX() - sx);
         final int width = mSwipeCurrentHorizontal.getMenuWidth();
         final int halfWidth = width / 2;
         final float distanceRatio = Math.min(1f, 1.0f * Math.abs(dx) / width);
@@ -313,8 +313,8 @@ public class SwipeMenuLayout extends FrameLayout implements Controller {
         if (velocity > 0) {
             duration = 4 * Math.round(1000 * Math.abs(distance / velocity));
         } else {
-            final float pageDelta = (float)Math.abs(dx) / width;
-            duration = (int)((pageDelta + 1) * 100);
+            final float pageDelta = (float) Math.abs(dx) / width;
+            duration = (int) ((pageDelta + 1) * 100);
         }
         duration = Math.min(duration, mScrollerDuration);
         return duration;
@@ -323,13 +323,13 @@ public class SwipeMenuLayout extends FrameLayout implements Controller {
     float distanceInfluenceForSnapDuration(float f) {
         f -= 0.5f; // center the values about 0.
         f *= 0.3f * Math.PI / 2.0f;
-        return (float)Math.sin(f);
+        return (float) Math.sin(f);
     }
 
     private void judgeOpenClose(int dx, int dy) {
         if (mSwipeCurrentHorizontal != null) {
             if (Math.abs(getScrollX()) >=
-                (mSwipeCurrentHorizontal.getMenuView().getWidth() * mOpenPercent)) { // auto open
+                    (mSwipeCurrentHorizontal.getMenuView().getWidth() * mOpenPercent)) { // auto open
                 if (Math.abs(dx) > mScaledTouchSlop || Math.abs(dy) > mScaledTouchSlop) { // swipe up
                     if (isMenuOpenNotEqual()) {
                         smoothCloseMenu();
@@ -462,6 +462,7 @@ public class SwipeMenuLayout extends FrameLayout implements Controller {
     private void smoothOpenMenu(int duration) {
         if (mSwipeCurrentHorizontal != null) {
             mSwipeCurrentHorizontal.autoOpenMenu(mScroller, getScrollX(), duration);
+            isMenuRightOpen = true;
             invalidate();
         }
     }
@@ -487,10 +488,15 @@ public class SwipeMenuLayout extends FrameLayout implements Controller {
         }
     }
 
+    public boolean isMenuRightOpen() {
+        return isMenuRightOpen;
+    }
+
     @Override
     public void smoothCloseMenu(int duration) {
         if (mSwipeCurrentHorizontal != null) {
             mSwipeCurrentHorizontal.autoCloseMenu(mScroller, getScrollX(), duration);
+            isMenuRightOpen = false;
             invalidate();
         }
     }
@@ -501,7 +507,7 @@ public class SwipeMenuLayout extends FrameLayout implements Controller {
         if (mContentView != null) {
             int contentViewWidth = mContentView.getMeasuredWidthAndState();
             contentViewHeight = mContentView.getMeasuredHeightAndState();
-            LayoutParams lp = (LayoutParams)mContentView.getLayoutParams();
+            LayoutParams lp = (LayoutParams) mContentView.getLayoutParams();
             int start = getPaddingLeft();
             int top = getPaddingTop() + lp.topMargin;
             mContentView.layout(start, top, start + contentViewWidth, top + contentViewHeight);
@@ -511,7 +517,7 @@ public class SwipeMenuLayout extends FrameLayout implements Controller {
             View leftMenu = mSwipeLeftHorizontal.getMenuView();
             int menuViewWidth = leftMenu.getMeasuredWidthAndState();
             int menuViewHeight = leftMenu.getMeasuredHeightAndState();
-            LayoutParams lp = (LayoutParams)leftMenu.getLayoutParams();
+            LayoutParams lp = (LayoutParams) leftMenu.getLayoutParams();
             int top = getPaddingTop() + lp.topMargin;
             leftMenu.layout(-menuViewWidth, top, 0, top + menuViewHeight);
         }
@@ -520,7 +526,7 @@ public class SwipeMenuLayout extends FrameLayout implements Controller {
             View rightMenu = mSwipeRightHorizontal.getMenuView();
             int menuViewWidth = rightMenu.getMeasuredWidthAndState();
             int menuViewHeight = rightMenu.getMeasuredHeightAndState();
-            LayoutParams lp = (LayoutParams)rightMenu.getLayoutParams();
+            LayoutParams lp = (LayoutParams) rightMenu.getLayoutParams();
             int top = getPaddingTop() + lp.topMargin;
 
             int parentViewWidth = getMeasuredWidthAndState();

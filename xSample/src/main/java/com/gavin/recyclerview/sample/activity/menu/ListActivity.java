@@ -17,16 +17,20 @@ package com.gavin.recyclerview.sample.activity.menu;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.gavin.recyclerview.OnItemMenuClickListener;
+import com.gavin.recyclerview.OnItemOpenCloseClickListener;
 import com.gavin.recyclerview.SwipeMenu;
 import com.gavin.recyclerview.SwipeMenuBridge;
 import com.gavin.recyclerview.SwipeMenuCreator;
 import com.gavin.recyclerview.SwipeMenuItem;
+import com.gavin.recyclerview.SwipeMenuLayout;
 import com.gavin.recyclerview.SwipeRecyclerView;
 import com.gavin.recyclerview.sample.R;
 import com.gavin.recyclerview.sample.activity.BaseActivity;
@@ -48,6 +52,13 @@ public class ListActivity extends BaseActivity {
 
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged(mDataList);
+
+
+        mRecyclerView.setOnItemOpenCloseClickListener((swipeMenuLayout, adapterPosition) -> new Handler().postDelayed(() -> {
+
+            Log.d("swipeMenuLayout", "swipeMenuLayout  " + swipeMenuLayout.isMenuRightOpen());
+
+        }, 1000));
     }
 
     /**
@@ -66,33 +77,33 @@ public class ListActivity extends BaseActivity {
             // 添加左侧的，如果不添加，则左侧不会出现菜单。
             {
                 SwipeMenuItem addItem = new SwipeMenuItem(ListActivity.this).setBackground(R.drawable.selector_green)
-                    .setImage(R.drawable.ic_action_add)
-                    .setWidth(width)
-                    .setHeight(height);
+                        .setImage(R.drawable.ic_action_add)
+                        .setWidth(width)
+                        .setHeight(height);
                 swipeLeftMenu.addMenuItem(addItem); // 添加菜单到左侧。
 
                 SwipeMenuItem closeItem = new SwipeMenuItem(ListActivity.this).setBackground(R.drawable.selector_red)
-                    .setImage(R.drawable.ic_action_close)
-                    .setWidth(width)
-                    .setHeight(height);
+                        .setImage(R.drawable.ic_action_close)
+                        .setWidth(width)
+                        .setHeight(height);
                 swipeLeftMenu.addMenuItem(closeItem); // 添加菜单到左侧。
             }
 
             // 添加右侧的，如果不添加，则右侧不会出现菜单。
             {
                 SwipeMenuItem deleteItem = new SwipeMenuItem(ListActivity.this).setBackground(R.drawable.selector_red)
-                    .setImage(R.drawable.ic_action_delete)
-                    .setText("删除")
-                    .setTextColor(Color.WHITE)
-                    .setWidth(width)
-                    .setHeight(height);
+                        .setImage(R.drawable.ic_action_delete)
+                        .setText("删除")
+                        .setTextColor(Color.WHITE)
+                        .setWidth(width)
+                        .setHeight(height);
                 swipeRightMenu.addMenuItem(deleteItem);// 添加菜单到右侧。
 
                 SwipeMenuItem addItem = new SwipeMenuItem(ListActivity.this).setBackground(R.drawable.selector_green)
-                    .setText("添加")
-                    .setTextColor(Color.WHITE)
-                    .setWidth(width)
-                    .setHeight(height);
+                        .setText("添加")
+                        .setTextColor(Color.WHITE)
+                        .setWidth(width)
+                        .setHeight(height);
                 swipeRightMenu.addMenuItem(addItem); // 添加菜单到右侧。
             }
         }
@@ -111,10 +122,10 @@ public class ListActivity extends BaseActivity {
 
             if (direction == SwipeRecyclerView.RIGHT_DIRECTION) {
                 Toast.makeText(ListActivity.this, "list第" + position + "; 右侧菜单第" + menuPosition, Toast.LENGTH_SHORT)
-                    .show();
+                        .show();
             } else if (direction == SwipeRecyclerView.LEFT_DIRECTION) {
                 Toast.makeText(ListActivity.this, "list第" + position + "; 左侧菜单第" + menuPosition, Toast.LENGTH_SHORT)
-                    .show();
+                        .show();
             }
         }
     };
