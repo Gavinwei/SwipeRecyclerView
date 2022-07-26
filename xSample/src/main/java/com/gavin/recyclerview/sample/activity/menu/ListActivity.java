@@ -55,11 +55,11 @@ public class ListActivity extends BaseActivity {
         mAdapter.notifyDataSetChanged(mDataList);
 
 
-        mRecyclerView.setOnItemOpenCloseClickListener((swipeMenuLayout, adapterPosition) -> new Handler().postDelayed(() -> {
+        mRecyclerView.setOnItemOpenCloseClickListener((showLeftCloseRight,swipeMenuLayout, adapterPosition) -> {
+            Log.d("CloseClick", "CloseClick: " + showLeftCloseRight +" adapterPosition: " +adapterPosition);
 
-//            Log.d("swipeMenuLayout", "swipeMenuLayout  " + swipeMenuLayout.isMenuRightOpen());
 
-        }, 1000));
+        });
 
         mRecyclerView.setOnRightMenuListener(new OnRightMenuListener() {
             @Override

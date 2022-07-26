@@ -10,6 +10,6 @@ public interface OnItemOpenCloseClickListener {
      * @param adapterPosition
      */
 
-    void onItemOpenCloseStatus(SwipeMenuLayout swipeMenuLayout, int adapterPosition);
+    void onItemOpenCloseStatus(boolean showLeftCloseRight,SwipeMenuLayout swipeMenuLayout, int adapterPosition);
 
 }
