@@ -63,7 +63,7 @@ public class ListActivity extends BaseActivity {
 
         mRecyclerView.setOnRightMenuListener(new OnRightMenuListener() {
             @Override
-            public void onItemRightMenuShow(boolean show) {
+            public void onItemRightMenuShow(boolean show,int position) {
 
                 Log.d("onItemRightMenuShow", "onItemRightMenuShow  " + show);
             }

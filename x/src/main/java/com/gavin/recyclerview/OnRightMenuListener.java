@@ -7,5 +7,5 @@ public interface OnRightMenuListener {
      *
      * @param show
      */
-    void onItemRightMenuShow(boolean show);
+    void onItemRightMenuShow(boolean show,int position);
 }

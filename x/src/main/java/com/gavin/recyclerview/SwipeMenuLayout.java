@@ -63,6 +63,8 @@ public class SwipeMenuLayout extends FrameLayout implements Controller {
     private int mScaledMinimumFlingVelocity;
     private int mScaledMaximumFlingVelocity;
 
+    private int mPosition;
+
     private OnRightMenuListener onRightMenuListener;
 
 
@@ -116,6 +118,10 @@ public class SwipeMenuLayout extends FrameLayout implements Controller {
         }
     }
 
+
+    private  void setPosition(int position){
+        this.mPosition = position;
+    }
     /**
      * Set whether open swipe. Default is true.
      *
@@ -470,7 +476,7 @@ public class SwipeMenuLayout extends FrameLayout implements Controller {
             mSwipeCurrentHorizontal.autoOpenMenu(mScroller, getScrollX(), duration);
             invalidate();
             if (onRightMenuListener != null) {
-                onRightMenuListener.onItemRightMenuShow(true);
+                onRightMenuListener.onItemRightMenuShow(true,mPosition);
             }
         }
     }
@@ -503,7 +509,7 @@ public class SwipeMenuLayout extends FrameLayout implements Controller {
             mSwipeCurrentHorizontal.autoCloseMenu(mScroller, getScrollX(), duration);
             invalidate();
             if (onRightMenuListener != null) {
-                onRightMenuListener.onItemRightMenuShow(false);
+                onRightMenuListener.onItemRightMenuShow(false,mPosition);
             }
         }
     }
