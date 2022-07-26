@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.gavin.recyclerview.OnItemMenuClickListener;
 import com.gavin.recyclerview.OnItemOpenCloseClickListener;
+import com.gavin.recyclerview.OnRightMenuListener;
 import com.gavin.recyclerview.SwipeMenu;
 import com.gavin.recyclerview.SwipeMenuBridge;
 import com.gavin.recyclerview.SwipeMenuCreator;
@@ -56,9 +57,17 @@ public class ListActivity extends BaseActivity {
 
         mRecyclerView.setOnItemOpenCloseClickListener((swipeMenuLayout, adapterPosition) -> new Handler().postDelayed(() -> {
 
-            Log.d("swipeMenuLayout", "swipeMenuLayout  " + swipeMenuLayout.isMenuRightOpen());
+//            Log.d("swipeMenuLayout", "swipeMenuLayout  " + swipeMenuLayout.isMenuRightOpen());
 
         }, 1000));
+
+        mRecyclerView.setOnRightMenuListener(new OnRightMenuListener() {
+            @Override
+            public void onItemRightMenuShow(boolean show) {
+
+                Log.d("onItemRightMenuShow", "onItemRightMenuShow  " + show);
+            }
+        });
     }
 
     /**

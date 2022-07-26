@@ -18,6 +18,7 @@ package com.gavin.recyclerview;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -61,7 +62,8 @@ public class SwipeMenuLayout extends FrameLayout implements Controller {
     private VelocityTracker mVelocityTracker;
     private int mScaledMinimumFlingVelocity;
     private int mScaledMaximumFlingVelocity;
-    private boolean isMenuRightOpen = false;
+
+    private OnRightMenuListener onRightMenuListener;
 
 
     public SwipeMenuLayout(Context context) {
@@ -375,6 +377,10 @@ public class SwipeMenuLayout extends FrameLayout implements Controller {
         }
     }
 
+    public void setOnRightMenuListener(OnRightMenuListener listener) {
+        this.onRightMenuListener = listener;
+    }
+
     public boolean hasLeftMenu() {
         return mSwipeLeftHorizontal != null && mSwipeLeftHorizontal.canSwipe();
     }
@@ -462,8 +468,10 @@ public class SwipeMenuLayout extends FrameLayout implements Controller {
     private void smoothOpenMenu(int duration) {
         if (mSwipeCurrentHorizontal != null) {
             mSwipeCurrentHorizontal.autoOpenMenu(mScroller, getScrollX(), duration);
-            isMenuRightOpen = true;
             invalidate();
+            if (onRightMenuListener != null) {
+                onRightMenuListener.onItemRightMenuShow(true);
+            }
         }
     }
 
@@ -488,16 +496,15 @@ public class SwipeMenuLayout extends FrameLayout implements Controller {
         }
     }
 
-    public boolean isMenuRightOpen() {
-        return isMenuRightOpen;
-    }
 
     @Override
     public void smoothCloseMenu(int duration) {
         if (mSwipeCurrentHorizontal != null) {
             mSwipeCurrentHorizontal.autoCloseMenu(mScroller, getScrollX(), duration);
-            isMenuRightOpen = false;
             invalidate();
+            if (onRightMenuListener != null) {
+                onRightMenuListener.onItemRightMenuShow(false);
+            }
         }
     }
 

@@ -86,6 +86,8 @@ public class SwipeRecyclerView extends RecyclerView {
 
     private AdapterWrapper mAdapterWrapper;
 
+    private OnRightMenuListener onRightMenuListener;
+
     private boolean mSwipeItemMenuEnable = true;
     private List<Integer> mDisableSwipeItemMenuList = new ArrayList<>();
 
@@ -115,6 +117,9 @@ public class SwipeRecyclerView extends RecyclerView {
 
     }
 
+    public void setOnRightMenuListener(OnRightMenuListener listener) {
+        this.onRightMenuListener = listener;
+    }
 
     /**
      * Set OnItemMoveListener.
@@ -606,6 +611,10 @@ public class SwipeRecyclerView extends RecyclerView {
                 if (itemView instanceof SwipeMenuLayout) {
                     touchView = (SwipeMenuLayout) itemView;
                 }
+                if (onRightMenuListener != null && touchView != null) {
+                    touchView.setOnRightMenuListener(onRightMenuListener);
+                }
+
             }
 
             boolean touchMenuEnable = mSwipeItemMenuEnable && !mDisableSwipeItemMenuList.contains(touchPosition);
