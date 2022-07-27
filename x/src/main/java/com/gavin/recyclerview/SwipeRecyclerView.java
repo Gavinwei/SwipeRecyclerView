@@ -613,6 +613,7 @@ public class SwipeRecyclerView extends RecyclerView {
                 }
                 if (onRightMenuListener != null && touchView != null) {
                     touchView.setOnRightMenuListener(onRightMenuListener);
+                    touchView.setPosition(touchPosition);
                 }
 
             }

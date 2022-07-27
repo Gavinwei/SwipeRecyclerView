@@ -119,7 +119,7 @@ public class SwipeMenuLayout extends FrameLayout implements Controller {
     }
 
 
-    private void setPosition(int position) {
+    public void setPosition(int position) {
         this.mPosition = position;
     }
 

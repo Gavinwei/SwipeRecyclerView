@@ -65,7 +65,7 @@ public class ListActivity extends BaseActivity {
             @Override
             public void onItemRightMenuShow(boolean show,int position) {
 
-                Log.d("onItemRightMenuShow", "onItemRightMenuShow  " + show);
+                Log.d("onItemRightMenuShow", "onItemRightMenuShow  " + show+"----"+position);
             }
         });
     }
