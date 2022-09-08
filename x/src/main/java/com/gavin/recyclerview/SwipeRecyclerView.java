@@ -668,8 +668,8 @@ public class SwipeRecyclerView extends RecyclerView {
                 }
                 case MotionEvent.ACTION_UP:
                 case MotionEvent.ACTION_CANCEL: {
-
                     isIntercepted = handleUnDown(x, y, isIntercepted);
+                    Log.d("disX", "disX " + "ACTION_CANCEL");
                     break;
                 }
             }
