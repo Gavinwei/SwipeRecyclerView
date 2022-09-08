@@ -663,7 +663,7 @@ public class SwipeRecyclerView extends RecyclerView {
                     Log.d("disX", "disX " + disX);
                     viewParent.requestDisallowInterceptTouchEvent(showRightCloseLeft || showLeftCloseRight);
                     if (mOnItemOpenCloseClickListener != null) {
-                        mOnItemOpenCloseClickListener.onItemOpenCloseStatus(disX < 115,mOldSwipedLayout, touchPosition);
+                        mOnItemOpenCloseClickListener.onItemOpenCloseStatus(mOldSwipedLayout.isRightMenuOpen(),mOldSwipedLayout, touchPosition);
                     }
                 }
                 case MotionEvent.ACTION_UP:

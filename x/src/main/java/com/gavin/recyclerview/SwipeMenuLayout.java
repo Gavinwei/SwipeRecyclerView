@@ -543,7 +543,6 @@ public class SwipeMenuLayout extends FrameLayout implements Controller {
             int menuViewHeight = rightMenu.getMeasuredHeightAndState();
             LayoutParams lp = (LayoutParams) rightMenu.getLayoutParams();
             int top = getPaddingTop() + lp.topMargin;
-
             int parentViewWidth = getMeasuredWidthAndState();
             rightMenu.layout(parentViewWidth, top, parentViewWidth + menuViewWidth, top + menuViewHeight);
         }
